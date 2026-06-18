@@ -1,0 +1,43 @@
+<!--
+  Add these into android/app/src/main/AndroidManifest.xml
+-->
+
+<!-- 1. Inside <manifest> tag, alongside other <uses-feature> -->
+<uses-feature
+    android:name="android.software.leanback"
+    android:required="false" />
+
+<!-- 2. Inside <application> tag -->
+<application
+    android:label="Raisul TV"
+    android:banner="@drawable/tv_banner"
+    android:usesCleartextTraffic="true"
+    ... >
+
+    <!-- 3. Add a second intent-filter to your main <activity> for Android TV launcher -->
+    <activity
+        android:name=".MainActivity"
+        ... >
+
+        <!-- Existing mobile launcher intent-filter -->
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+
+        <!-- Android TV / Fire TV launcher intent-filter -->
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+        </intent-filter>
+
+    </activity>
+</application>
+
+<!--
+  Notes:
+  - android:usesCleartextTraffic="true" is REQUIRED because the stream URL
+    (http://10.10.10.2/...) uses plain HTTP, not HTTPS.
+  - Create a 320x180 px drawable named tv_banner.png/xml for the TV launcher banner,
+    placed in android/app/src/main/res/drawable/
+-->
